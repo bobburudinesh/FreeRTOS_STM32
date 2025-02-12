@@ -16,6 +16,8 @@
 #include "main.h"
 #include "FreeRTOS.h"
 #include "task.h"
+// Enable the Cycle count
+#define DWT_CTRL	(*(volatile uint32_t*)0xE0001000)
 
 static void task1_handler(void* parameters);
 static void task2_handler(void* parameters);
@@ -28,7 +30,9 @@ int main(void) {
 	BaseType_t	status;
 	 HAL_Init();
 	 SystemClock_Config();
-
+	 DWT_CTRL |= (1<<0);
+	 SEGGER_SYSVIEW_Conf();
+	 SEGGER_SYSVIEW_Start();
 	// Create TAsk 1
 	status = xTaskCreate(task1_handler, "Task_1", 200, "Hello World from Task -1", 2, &task_1_handle);
 	configASSERT(status == pdPASS)
@@ -90,13 +94,13 @@ void Error_handler(void) {
 static void task1_handler(void* parameters) {
 	while(1) {
 		printf("%s\n", (char*)parameters);
-		taskYIELD();// Will give up processor after sending the message.
+		//taskYIELD();// Will give up processor after sending the message.
 	}
 }
 
 static void task2_handler(void* parameters) {
 	while(1) {
 			printf("%s\n", (char*)parameters);
-			taskYIELD();// Will give up processor after sending the message.
+			//taskYIELD();// Will give up processor after sending the message.
 		}
 }
