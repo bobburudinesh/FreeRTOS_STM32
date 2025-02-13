@@ -118,6 +118,7 @@ void task1_Handler(void * parameters) {
 	while(1) {
 		//SEGGER_SYSVIEW_PrintfTarget("Task_1_Green_LED");
 		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+		vTaskDelay(pdMS_TO_TICKS(1000));
 	}
 
 }
@@ -126,6 +127,7 @@ void task2_Handler(void * parameters) {
 	while(1) {
 			//SEGGER_SYSVIEW_PrintfTarget("Task_1_Orange_LED");
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+			vTaskDelay(pdMS_TO_TICKS(800));
 		}
 
 }
@@ -133,6 +135,7 @@ void task3_Handler(void * parameters) {
 	while(1) {
 			//SEGGER_SYSVIEW_PrintfTarget("Task_1_Red_LED");
 			HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+			vTaskDelay(pdMS_TO_TICKS(400));
 		}
 
 }
