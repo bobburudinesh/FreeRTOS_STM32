@@ -1,4 +1,4 @@
-"./Core/Src/RTOS_Task_1.o"
+"./Core/Src/Multiple_Tasks_And_Scheduling.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"
 "./Core/Src/stm32f4xx_it.o"
