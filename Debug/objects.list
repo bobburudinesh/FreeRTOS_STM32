@@ -1,4 +1,4 @@
-"./Core/Src/Multiple_Tasks_And_Scheduling.o"
+"./Core/Src/Task_Deletion_Using_Notification.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"
 "./Core/Src/stm32f4xx_it.o"
