@@ -20,6 +20,8 @@ void print_Task_Handle(void * parameters);
 void command_Task_Handle(void * parameters);
 void rtc_Task_Handle(void * parameters);
 
+void led_Timer_Callback( TimerHandle_t xTimer);
+
 
 
 void UART_init(void);
@@ -39,6 +41,8 @@ xTaskHandle	hMenu_Task;
 xTaskHandle hLed_Task;
 xTaskHandle hRtc_Task; // TODO: Implement once RTC tutorial is completed
 
+xTimerHandle hled_Timer;
+
 xQueueHandle qData;
 xQueueHandle qPrint;
 
@@ -51,13 +55,17 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	UART_init();
-	//GPIO_init();
+	GPIO_init();
 	create_Tasks();
 	qData = xQueueCreate(10,sizeof(char));
 	configASSERT(qData != NULL);
 
 	qPrint = xQueueCreate(10,sizeof(size_t));
 	configASSERT(qPrint != NULL);
+
+	hled_Timer = xTimerCreate("Led Timer", pdMS_TO_TICKS(500), pdTRUE, 0, led_Timer_Callback);
+	configASSERT(hled_Timer != NULL);
+
 	HAL_UART_Receive_IT(&huart2, (uint8_t*)&user_data, 1);
 
 	vTaskStartScheduler();
@@ -136,7 +144,7 @@ void GPIO_init(void) {
 	ledGpio.Mode = GPIO_MODE_OUTPUT_PP;
 	ledGpio.Pull = GPIO_NOPULL;
 	ledGpio.Speed = GPIO_SPEED_FAST;
-	ledGpio.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14; // GREEN LED TAKS 1
+	ledGpio.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15; // GREEN LED TAKS 1
 	HAL_GPIO_Init(GPIOD, &ledGpio);
 
 //	ledGpio.Pin = GPIO_PIN_13; // ORANGE LED TAKS 2

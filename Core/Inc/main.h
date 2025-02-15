@@ -36,6 +36,7 @@ extern "C" {
 #include"FreeRTOS.h"
 #include "task.h"
 #include "queue.h"
+#include "timers.h"
 
 /* USER CODE END Includes */
 
@@ -55,6 +56,10 @@ typedef enum {
 	sRtcReport,
 }state_t;
 
+typedef struct {
+	TickType_t ticks;
+}led_Timer_Config_t;
+
 extern xTaskHandle	hPrint_Task;
 extern xTaskHandle hCommand_Task;
 extern xTaskHandle	hMenu_Task;
@@ -63,7 +68,12 @@ extern xTaskHandle hRtc_Task; // TODO: Implement once RTC tutorial is completed
 
 extern xQueueHandle qData;
 extern xQueueHandle qPrint;
+
+extern xTimerHandle hled_Timer;
 extern state_t current_state; // VAriable that holds application state
+
+extern uint8_t led_State;
+extern uint8_t led_current_option;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -80,7 +90,7 @@ extern state_t current_state; // VAriable that holds application state
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+extern void led_effects(uint8_t option);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
