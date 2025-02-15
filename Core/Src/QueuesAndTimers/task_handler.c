@@ -11,7 +11,7 @@ static int extract_command(command_t *command);
 static void process_command(command_t *command);
 
 
-
+const char* invalid_option = " ----- INVALID OPTION -----";
 
 void led_Task_Handle(void * parameters) {
 
@@ -22,16 +22,44 @@ void led_Task_Handle(void * parameters) {
 }
 
 void menu_Task_Handle(void * parameters) {
+	uint32_t cmd_addr;
+	command_t *cmd;
+	uint8_t option;
 	const char* message = "====================\n "
 			"|       MENU        |\n"
 			"====================\n"
 			"LED Effect    ---> 0\n"
 			"Date And Time ---> 1\n"
-			"Exit          ---> 3\n"
+			"Exit          ---> 2\n"
 			"Enter Your Selection Here:";
 
 	while(1) {
+		xQueueSend(qPrint, &message, portMAX_DELAY);
+		xTaskNotifyWait(0,0,&cmd_addr,portMAX_DELAY);
+		cmd = (command_t*)cmd_addr;
+		if(cmd->length == 1) {
+			option = cmd->payload[0]-48;
+			switch(option) {
+			case 0:
+				current_state = sLedEffect;
+				xTaskNotify(hLed_Task,0, eNoAction);
+				break;
+			case 1:
+				current_state = sRtcMenu;
+				xTaskNotify(hRtc_Task,0,eNoAction);
+				break;
+			case 2:
+				break;
+			default:
+				xQueueSend(qPrint,&invalid_option, portMAX_DELAY);
+				break;
+			}
+		} else {
+			// invalid option entry
+			xQueueSend(qPrint,&invalid_option, portMAX_DELAY);
+		}
 
+		xTaskNotifyWait(0,0,NULL,portMAX_DELAY);
 	}
 
 }
