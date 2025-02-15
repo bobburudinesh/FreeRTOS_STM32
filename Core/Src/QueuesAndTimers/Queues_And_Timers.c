@@ -10,7 +10,13 @@
  * Exercise in slides
  *
  * */
-
+/*TODO: Very Important when we are running this application Segger folder should
+ * be excluded from build and USE_SEGGER_SYSVIEW in RTOSConfig.h file should be 0.
+ *
+ * For all other applications for which we use segger view we have to make USE_SEGGER_SYSVIEW to 1
+ * and include SEGGER folder in build.
+ *
+ * */
 
 #include "main.h"
 

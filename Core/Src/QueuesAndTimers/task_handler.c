@@ -9,22 +9,27 @@
 
 static int extract_command(command_t *command);
 static void process_command(command_t *command);
+extern void stop_LedTimer(void);
 
+const char* feature_NotAvailable = "----- RTC Feature Coming Soon... -----\n";
 
-const char* invalid_option = " ----- INVALID OPTION -----";
+const char* invalid_option = "\n----- INVALID OPTION -----\n";
+
+extern UART_HandleTypeDef huart2;
 
 void led_Task_Handle(void * parameters) {
 	uint32_t cmd_addr;
 	command_t *cmd;
-	const char* ledmenu =  "====================\n "
+	const char* ledmenu =  "\n====================\n "
 			"|       LED        |\n"
 			"====================\n"
 			"none, e1, e2, e3, e4 \n"
-			"Enter Your Selection Here:";
+			"Enter Your Selection Here: ";
 	while(1) {
 		xTaskNotifyWait(0,0,NULL, portMAX_DELAY);
 		xQueueSend(qPrint, (void*)&ledmenu, portMAX_DELAY);
 		xTaskNotifyWait(0,0,&cmd_addr, portMAX_DELAY);
+		stop_LedTimer();
 		cmd = (command_t*)cmd_addr;
 		if (cmd->length <=4) {
 			if(!(strcmp((char*)cmd->payload, "none"))) {
@@ -41,10 +46,13 @@ void led_Task_Handle(void * parameters) {
 				xQueueSend(qPrint,(void*)&invalid_option, portMAX_DELAY);
 			}
 		} else {
+
 			xQueueSend(qPrint,(void*)&invalid_option, portMAX_DELAY);
-			current_state = sMainMenu;
-			xTaskNotify(hMenu_Task,0,eNoAction);
+			stop_LedTimer();
+
 		}
+		current_state = sMainMenu;
+		xTaskNotify(hMenu_Task,0,eNoAction);
 
 	}
 
@@ -54,7 +62,7 @@ void menu_Task_Handle(void * parameters) {
 	uint32_t cmd_addr;
 	command_t *cmd;
 	uint8_t option;
-	const char* message = "====================\n "
+	const char* message = "\n====================\n "
 			"|       MENU        |\n"
 			"====================\n"
 			"LED Effect    ---> 0\n"
@@ -94,9 +102,11 @@ void menu_Task_Handle(void * parameters) {
 }
 
 void print_Task_Handle(void * parameters) {
+	uint32_t* msg;
 
 	while(1) {
-
+		xQueueReceive(qPrint, &msg, portMAX_DELAY);
+		HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen((char*)msg), HAL_MAX_DELAY);
 	}
 
 }
@@ -115,9 +125,15 @@ void command_Task_Handle(void * parameters) {
 }
 
 void rtc_Task_Handle(void * parameters) {
-
+	const char* rtcMenu =  "\n====================\n "
+			"|       RTC        |\n"
+			"====================\n"
+			"RTC Coming Soon... \n";
 	while(1) {
-
+//		xTaskNotifyWait(0,0,NULL,portMAX_DELAY);
+//		xQueueSend(qPrint, &rtcMenu, portMAX_DELAY);
+//		current_state = sMainMenu;
+//		xTaskNotify(hMenu_Task,0, eNoAction);
 	}
 
 }
