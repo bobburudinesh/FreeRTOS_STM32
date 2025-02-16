@@ -122,7 +122,9 @@ standard names. */
 #define xPortPendSVHandler PendSV_Handler
 #define xPortSysTickHandler SysTick_Handler
 
-#include "SEGGER_SYSVIEW_FreeRTOS.h"
+#define USE_SEGGER_SYSVIEW 0  // Enable tracing if set to 1: FOR SEGGER VIEW
+
+//#include "SEGGER_SYSVIEW_FreeRTOS.h"
 
 #endif /* FREERTOS_CONFIG_H */
 

@@ -33,11 +33,47 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include"string.h"
 #include"stdio.h"
+#include"FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "timers.h"
+
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+typedef struct{
+	uint8_t payload[10];
+	uint8_t length;
+}command_t;
 
+typedef enum {
+	sMainMenu = 0,
+	sLedEffect,
+	sRtcMenu,
+	sRtcTimeConfig,
+	sRtcDateConfig,
+	sRtcReport,
+}state_t;
+
+typedef struct {
+	TickType_t ticks;
+}led_Timer_Config_t;
+
+extern xTaskHandle	hPrint_Task;
+extern xTaskHandle hCommand_Task;
+extern xTaskHandle	hMenu_Task;
+extern xTaskHandle hLed_Task;
+extern xTaskHandle hRtc_Task; // TODO: Implement once RTC tutorial is completed
+
+extern xQueueHandle qData;
+extern xQueueHandle qPrint;
+
+extern xTimerHandle hled_Timer;
+extern state_t current_state; // VAriable that holds application state
+
+extern uint8_t led_State;
+extern uint8_t led_current_option;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -54,7 +90,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+extern void led_effects(uint8_t option);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -126,7 +162,8 @@ void Error_Handler(void);
 #define MEMS_INT2_GPIO_Port GPIOE
 
 /* USER CODE BEGIN Private defines */
-
+#define Data_Queue_Length	10
+#define Print_Queue_Length  10
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

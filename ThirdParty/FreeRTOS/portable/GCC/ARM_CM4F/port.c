@@ -642,12 +642,18 @@ void xPortSysTickHandler( void )
      * save and then restore the interrupt mask value as its value is already
      * known. */
     portDISABLE_INTERRUPTS();
-    traceISR_ENTER();
+    if(USE_SEGGER_SYSVIEW) {
+    	traceISR_ENTER();
+    }
+
     {
         /* Increment the RTOS tick. */
         if( xTaskIncrementTick() != pdFALSE )
         {
-            traceISR_EXIT_TO_SCHEDULER();
+        	if(USE_SEGGER_SYSVIEW) {
+        		traceISR_EXIT_TO_SCHEDULER();
+        	}
+
 
             /* A context switch is required.  Context switching is performed in
              * the PendSV interrupt.  Pend the PendSV interrupt. */
@@ -655,7 +661,10 @@ void xPortSysTickHandler( void )
         }
         else
         {
-            traceISR_EXIT();
+        	if(USE_SEGGER_SYSVIEW) {
+        		traceISR_EXIT();
+        	}
+
         }
     }
     portENABLE_INTERRUPTS();
