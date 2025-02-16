@@ -46,10 +46,7 @@ void led_Task_Handle(void * parameters) {
 				xQueueSend(qPrint,(void*)&invalid_option, portMAX_DELAY);
 			}
 		} else {
-
 			xQueueSend(qPrint,(void*)&invalid_option, portMAX_DELAY);
-			stop_LedTimer();
-
 		}
 		current_state = sMainMenu;
 		xTaskNotify(hMenu_Task,0,eNoAction);
@@ -89,11 +86,12 @@ void menu_Task_Handle(void * parameters) {
 				break;
 			default:
 				xQueueSend(qPrint,&invalid_option, portMAX_DELAY);
-				break;
+				continue;
 			}
 		} else {
 			// invalid option entry
 			xQueueSend(qPrint,&invalid_option, portMAX_DELAY);
+			continue;
 		}
 
 		xTaskNotifyWait(0,0,NULL,portMAX_DELAY);
@@ -160,17 +158,21 @@ static void process_command(command_t *command) {
 	switch(current_state){
 	case sMainMenu:
 		xTaskNotify(hMenu_Task,(uint32_t)command, eSetValueWithOverwrite);
+		break;
 	case sLedEffect:
 		xTaskNotify(hLed_Task,(uint32_t)command, eSetValueWithOverwrite);
+		break;
 	case sRtcMenu:
 		xTaskNotify(hRtc_Task,(uint32_t)command, eSetValueWithOverwrite);
+		break;
 	case sRtcTimeConfig:
 		xTaskNotify(hRtc_Task,(uint32_t)command, eSetValueWithOverwrite);
+		break;
 	case sRtcDateConfig:
 		xTaskNotify(hRtc_Task,(uint32_t)command, eSetValueWithOverwrite);
+		break;
 	case sRtcReport:
 		xTaskNotify(hRtc_Task,(uint32_t)command, eSetValueWithOverwrite);
-	default:
 		break;
 
 	}

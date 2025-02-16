@@ -92,7 +92,6 @@ void create_Tasks() {
 	configASSERT(status == pdPASS);
 	status = xTaskCreate(rtc_Task_Handle, "Rtc_TASK", 250, NULL, 2, &hRtc_Task);
 	configASSERT(status == pdPASS);
-
 }
 
 
