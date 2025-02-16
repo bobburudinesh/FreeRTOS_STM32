@@ -1,7 +1,7 @@
-"./Core/Src/QueuesAndTimers/Queues_And_Timers.o"
 "./Core/Src/QueuesAndTimers/led_effect.o"
 "./Core/Src/QueuesAndTimers/rtc.o"
 "./Core/Src/QueuesAndTimers/task_handler.o"
+"./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.o"
 "./Core/Src/it.o"
 "./Core/Src/msp.o"
 "./Core/Src/stm32f4xx_hal_timebase_tim.o"
