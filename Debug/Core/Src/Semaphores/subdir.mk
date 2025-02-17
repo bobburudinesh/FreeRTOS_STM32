@@ -5,13 +5,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.c 
+../Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.c 
 
 OBJS += \
-./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.o 
+./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.o 
 
 C_DEPS += \
-./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.d 
+./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +21,7 @@ Core/Src/Semaphores/%.o Core/Src/Semaphores/%.su Core/Src/Semaphores/%.cyclo: ..
 clean: clean-Core-2f-Src-2f-Semaphores
 
 clean-Core-2f-Src-2f-Semaphores:
-	-$(RM) ./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.cyclo ./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.d ./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.o ./Core/Src/Semaphores/Semaphores_Binary_TaskSyncronization.su
+	-$(RM) ./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.cyclo ./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.d ./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.o ./Core/Src/Semaphores/Semaphores_Counting_Interrupt_And_Task_Sync.su
 
 .PHONY: clean-Core-2f-Src-2f-Semaphores
 
