@@ -22,7 +22,6 @@ void slave_Task_Handle( void *pvParameters );
 void UART_init(void);
 void SystemClock_Config(void);
 void Error_handler(void);
-void GPIO_init(void);
 void print_Message(char* message);
 
 xTaskHandle hmaster_Task;
@@ -42,23 +41,21 @@ int main(void) {
 
 	HAL_Init();
 	SystemClock_Config();
-	//HAL_RCC_DeInit();
-	//SystemCoreClockUpdate();
 	UART_init();
-
-
-
 	semaHandle = xSemaphoreCreateBinary();
 
 	workQueue = xQueueCreate(1,sizeof(int));
 
 	if(semaHandle != NULL && workQueue != NULL) {
 		status = xTaskCreate(master_Task_Handle, "Master", 200, NULL, 4, &hmaster_Task);
-		configASSERT( status != pdPASS);
+		configASSERT( status == pdPASS);
 
 		status = xTaskCreate(slave_Task_Handle, "Slave", 200, NULL, 4, &hslave_Task);
-		configASSERT( status != pdPASS);
+		configASSERT( status == pdPASS);
+
+		vTaskStartScheduler();
 	}
+
 	while(1);
 }
 
@@ -109,22 +106,6 @@ void Error_handler(void) {
 	while(1);
 }
 
-
-void GPIO_init(void) {
-	__HAL_RCC_GPIOD_CLK_ENABLE();
-	GPIO_InitTypeDef	ledGpio;
-	ledGpio.Mode = GPIO_MODE_OUTPUT_PP;
-	ledGpio.Pull = GPIO_NOPULL;
-	ledGpio.Speed = GPIO_SPEED_FAST;
-	ledGpio.Pin = GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 | GPIO_PIN_15; // GREEN LED TAKS 1
-	HAL_GPIO_Init(GPIOD, &ledGpio);
-
-//	ledGpio.Pin = GPIO_PIN_13; // ORANGE LED TAKS 2
-//	HAL_GPIO_Init(GPIOD, &ledGpio);
-//
-//	ledGpio.Pin = GPIO_PIN_14; // RED LED TAKS 3
-//	HAL_GPIO_Init(GPIOD, &ledGpio);
-}
 
 void UART_init(void) {
 	huart2.Instance = USART2;
@@ -183,7 +164,7 @@ void slave_Task_Handle( void *pvParameters ) {
 			if(status == pdTRUE) {
 				sprintf(message, "Task %d Completed \r\n", ticketID);
 				print_Message(message);
-				vTaskDelay(pdMS_TO_TICKS(100));
+				vTaskDelay(pdMS_TO_TICKS(1000));
 			} else {
 				sprintf(message, "Work Queue is Empty\r\n");
 				print_Message(message);
