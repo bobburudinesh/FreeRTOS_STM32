@@ -23,6 +23,7 @@ static void task1_handler(void* parameters);
 static void task2_handler(void* parameters);
 void SystemClock_Config(void);
 void Error_handler(void);
+
 extern  void SEGGER_UART_init(uint32_t);
 
 int main(void) {
@@ -32,9 +33,9 @@ int main(void) {
 	 HAL_Init();
 	 SystemClock_Config();
 	 DWT_CTRL |= (1<<0);
-	 SEGGER_UART_init(500000);
+	 SEGGER_UART_init(5);
 	 SEGGER_SYSVIEW_Conf();
-	// SEGGER_SYSVIEW_Start();
+	 //SEGGER_SYSVIEW_Start();
 	// Create TAsk 1
 	status = xTaskCreate(task1_handler, "Task_1", 200, "Hello World from Task -1", 2, &task_1_handle);
 	configASSERT(status == pdPASS)
@@ -96,13 +97,13 @@ void Error_handler(void) {
 static void task1_handler(void* parameters) {
 	while(1) {
 		printf("%s\n", (char*)parameters);
-		//taskYIELD();// Will give up processor after sending the message.
+		taskYIELD();// Will give up processor after sending the message.
 	}
 }
 
 static void task2_handler(void* parameters) {
 	while(1) {
 			printf("%s\n", (char*)parameters);
-			//taskYIELD();// Will give up processor after sending the message.
+			taskYIELD();// Will give up processor after sending the message.
 		}
 }

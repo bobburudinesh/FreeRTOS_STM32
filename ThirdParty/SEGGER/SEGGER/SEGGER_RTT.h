@@ -42,7 +42,7 @@
 *                                                                    *
 **********************************************************************
 *                                                                    *
-*       SystemView version: 3.60                                    *
+*       SystemView version: 3.60d                                    *
 *                                                                    *
 **********************************************************************
 ---------------------------END-OF-HEADER------------------------------
@@ -134,7 +134,7 @@ Revision: $Rev: 25842 $
       #define _CORE_NEEDS_DMB           1
       #define RTT__DMB() __asm volatile ("dmb\n" : : :);
     #elif \
-    ((defined __ARM_ARCH_7A__) || (defined __ARM_ARCH_7R__)) || \   // Cortex-A/R ARMv7-A/R & ARMv8-A/R
+    ((defined __ARM_ARCH_7A__) || (defined __ARM_ARCH_7R__)) || \
     ((defined __ARM_ARCH_8A__) || (defined __ARM_ARCH_8R__))
       //
       // Cortex-A/R ARMv7-A/R & ARMv8-A/R

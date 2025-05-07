@@ -10,7 +10,7 @@
 
 extern TIM_HandleTypeDef htim6;
 
-extern UART_HandleTypeDef huart2;
+//extern UART_HandleTypeDef huart2;
 
 extern void button_Interrupt_Handler(void);
 
@@ -19,13 +19,13 @@ void TIM6_DAC_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim6);
 }
 
-void USART2_IRQHandler(void) {
-	HAL_UART_IRQHandler(&huart2);
-}
+//void USART2_IRQHandler(void) {
+//	HAL_UART_IRQHandler(&huart2);
+//}
 
 
 void EXTI0_IRQHandler(void) {
-	button_Interrupt_Handler();
+	//button_Interrupt_Handler();
 	//clear EXTI 0 pending bit in the exti pending register
 	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_0);
 }

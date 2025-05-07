@@ -22,7 +22,6 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Core/Src/Practice_Folder \
 Core/Src/QueuesAndTimers \
 Core/Src \
 Core/Startup \
@@ -30,4 +29,9 @@ Drivers/STM32F4xx_HAL_Driver/Src \
 ThirdParty/FreeRTOS \
 ThirdParty/FreeRTOS/portable/GCC/ARM_CM4F \
 ThirdParty/FreeRTOS/portable/MemMang \
+ThirdParty/SEGGER/Config \
+ThirdParty/SEGGER/OS \
+ThirdParty/SEGGER/Rec \
+ThirdParty/SEGGER/SEGGER \
+ThirdParty/SEGGER/SEGGER/Syscalls \
 

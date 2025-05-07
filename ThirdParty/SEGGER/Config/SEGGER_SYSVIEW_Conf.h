@@ -42,7 +42,7 @@
 *                                                                    *
 **********************************************************************
 *                                                                    *
-*       SystemView version: 3.60                                    *
+*       SystemView version: 3.60d                                    *
 *                                                                    *
 **********************************************************************
 -------------------------- END-OF-HEADER -----------------------------
@@ -96,7 +96,7 @@ Additional information:
 **********************************************************************
 */
 
-#define SEGGER_UART_REC 0
+#define SEGGER_UART_REC 1
 
 #if (SEGGER_UART_REC == 1)
 	extern void HIF_UART_EnableTXEInterrupt  (void);
