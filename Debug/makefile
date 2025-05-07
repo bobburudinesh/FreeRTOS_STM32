@@ -1,6 +1,6 @@
 ################################################################################
 # Automatically-generated file. Do not edit!
-# Toolchain: GNU Tools for STM32 (12.3.rel1)
+# Toolchain: GNU Tools for STM32 (13.3.rel1)
 ################################################################################
 
 -include ../makefile.init
@@ -14,8 +14,8 @@ RM := rm -rf
 -include ThirdParty/FreeRTOS/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
--include Core/Src/Semaphores/subdir.mk
 -include Core/Src/QueuesAndTimers/subdir.mk
+-include Core/Src/Practice_Folder/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
 
@@ -65,8 +65,8 @@ all: main-build
 main-build: FreeRTOS_STM32.elf secondary-outputs
 
 # Tool invocations
-FreeRTOS_STM32.elf FreeRTOS_STM32.map: $(OBJS) $(USER_OBJS) D:\Embedded_Systems\Projects\STM32_Projects\FreeRTOS_STM32\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "FreeRTOS_STM32.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Embedded_Systems\Projects\STM32_Projects\FreeRTOS_STM32\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FreeRTOS_STM32.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+FreeRTOS_STM32.elf FreeRTOS_STM32.map: $(OBJS) $(USER_OBJS) /Users/dineshbobburu/Documents/Embedded\ Systems/Projects/STM32/FreeRTOS_STM32/STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "FreeRTOS_STM32.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/dineshbobburu/Documents/Embedded Systems/Projects/STM32/FreeRTOS_STM32/STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="FreeRTOS_STM32.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

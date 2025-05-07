@@ -25,6 +25,9 @@ void task2_Handler(void * parameters);
 void task3_Handler(void * parameters);
 void GPIO_init(void);
 
+UART_HandleTypeDef huart2;
+
+
 int main(void) {
 	TaskHandle_t task_1_handle;
 	TaskHandle_t task_2_handle;
@@ -35,9 +38,9 @@ int main(void) {
 	HAL_Init();
 	SystemClock_Config();
 	GPIO_init();
-	SEGGER_UART_init(500000);
+	//SEGGER_UART_init(500000);
 	DWT_CTRL |= (1<<0);
-	SEGGER_SYSVIEW_Conf();
+	//SEGGER_SYSVIEW_Conf();
 	task_1_Status = xTaskCreate(task1_Handler, "Task_1_Green_LED", 200, NULL, 2, &task_1_handle);
 	configASSERT(task_1_Status == pdPASS);
 

@@ -14,6 +14,7 @@ void HAL_MspInit(void)
 
   __HAL_RCC_SYSCFG_CLK_ENABLE();
   __HAL_RCC_PWR_CLK_ENABLE();
+
   vInitPrioGroupValue();
 }
 
@@ -34,3 +35,4 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart) {
 	HAL_NVIC_SetPriority(USART2_IRQn, 15, 0);
 }
 
+// EXTI0_IRQn
