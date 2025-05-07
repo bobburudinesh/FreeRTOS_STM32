@@ -33,15 +33,15 @@ int main(void) {
 	 HAL_Init();
 	 SystemClock_Config();
 	 DWT_CTRL |= (1<<0);
-	 SEGGER_UART_init(5);
+	 SEGGER_UART_init(200000);
 	 SEGGER_SYSVIEW_Conf();
 	 //SEGGER_SYSVIEW_Start();
 	// Create TAsk 1
 	status = xTaskCreate(task1_handler, "Task_1", 200, "Hello World from Task -1", 2, &task_1_handle);
-	configASSERT(status == pdPASS)
+	configASSERT(status == pdPASS);
 	// Create Task 2
 	status = xTaskCreate(task2_handler, "Task_2", 200, "Hello World from Task -2", 2, &task_2_handle);
-	configASSERT(status == pdPASS)
+	configASSERT(status == pdPASS);
 	// START The Free RTOS Scheduler
 	vTaskStartScheduler();
 	while(1);
